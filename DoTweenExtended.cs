@@ -50,16 +50,7 @@ namespace DG.Tweening
             return t;
         }
         #endregion
-        
-        #region Variables
-        public static TweenerCore<float, float, FloatOptions> DOFloat(this float target, float endValue, float duration)
-        {
-            TweenerCore<float, float, FloatOptions> t = DOTween.To(() => target, x => target = x, endValue, duration);
-            t.SetTarget(target);
-            return t;
-        }
-        #endregion
-        
+
         #region Tilemap
         public static TweenerCore<Color, Color, ColorOptions> DOTilemapFade(this Tilemap target, float endValue, float duration)
         {
@@ -197,31 +188,55 @@ namespace DG.Tweening
         #region PostProcess
         public static TweenerCore<float, float, FloatOptions> DOVignetteIntensity(this Volume target, float endValue, float duration)
         {
-            TweenerCore<float, float, FloatOptions> t = DOTween.To(() => target.GetComponent<Vignette>().intensity.value, x => target.GetComponent<Vignette>().intensity.value = x, endValue, duration);
+            Vignette vignette;
+            target.profile.TryGet(out vignette);
+            
+            TweenerCore<float, float, FloatOptions> t = DOTween.To(() => vignette.intensity.value, x => vignette.intensity.value = x, endValue, duration);
             t.SetTarget(target);
             return t;
         }
         public static TweenerCore<float, float, FloatOptions> DOVignetteSmoothness(this Volume target, float endValue, float duration)
         {
-            TweenerCore<float, float, FloatOptions> t = DOTween.To(() => target.GetComponent<Vignette>().smoothness.value, x => target.GetComponent<Vignette>().smoothness.value = x, endValue, duration);
+            Vignette vignette;
+            target.profile.TryGet(out vignette);
+            
+            TweenerCore<float, float, FloatOptions> t = DOTween.To(() => vignette.smoothness.value, x => vignette.smoothness.value = x, endValue, duration);
             t.SetTarget(target);
             return t;
         }
         public static TweenerCore<Color, Color, ColorOptions> DOVignetteColor(this Volume target, Color endValue, float duration)
         {
-            TweenerCore<Color, Color, ColorOptions> t = DOTween.To(() => target.GetComponent<Vignette>().color.value, x => target.GetComponent<Vignette>().color.value = x, endValue, duration);
+            Vignette vignette;
+            target.profile.TryGet(out vignette);
+            
+            TweenerCore<Color, Color, ColorOptions> t = DOTween.To(() => vignette.color.value, x => vignette.color.value = x, endValue, duration);
             t.SetTarget(target);
             return t;
         }
         public static TweenerCore<float, float, FloatOptions> DOBloomIntensity(this Volume target, float endValue, float duration)
         {
-            TweenerCore<float, float, FloatOptions> t = DOTween.To(() => target.GetComponent<Bloom>().intensity.value, x => target.GetComponent<Bloom>().intensity.value = x, endValue, duration);
+            Bloom bloom;
+            target.profile.TryGet(out bloom);
+            
+            TweenerCore<float, float, FloatOptions> t = DOTween.To(() => bloom.intensity.value, x => bloom.intensity.value = x, endValue, duration);
             t.SetTarget(target);
             return t;
         }
         public static TweenerCore<float, float, FloatOptions> DOChromaticAberrationIntensity(this Volume target, float endValue, float duration)
         {
-            TweenerCore<float, float, FloatOptions> t = DOTween.To(() => target.GetComponent<ChromaticAberration>().intensity.value, x => target.GetComponent<ChromaticAberration>().intensity.value = x, endValue, duration);
+            ChromaticAberration ca;
+            target.profile.TryGet(out ca);
+            
+            TweenerCore<float, float, FloatOptions> t = DOTween.To(() => ca.intensity.value, x => ca.intensity.value = x, endValue, duration);
+            t.SetTarget(target);
+            return t;
+        }
+        public static TweenerCore<float, float, FloatOptions> DOLensDistortionIntensity(this Volume target, float endValue, float duration)
+        {
+            LensDistortion ld;
+            target.profile.TryGet(out ld);
+            
+            TweenerCore<float, float, FloatOptions> t = DOTween.To(() => ld.intensity.value, x => ld.intensity.value = x, endValue, duration);
             t.SetTarget(target);
             return t;
         }
@@ -231,6 +246,70 @@ namespace DG.Tweening
             t.SetTarget(target);
             return t;
         }
+        #endregion
+        
+        #region Light
+        
+        public static TweenerCore<float, float, FloatOptions> DOLightIntensity(this Light target, float endValue, float duration)
+        {
+            TweenerCore<float, float, FloatOptions> t = DOTween.To(() => target.intensity, x => target.intensity = x, endValue, duration);
+            t.SetTarget(target);
+            return t;
+        }
+        
+        public static TweenerCore<float, float, FloatOptions> DOLightRange(this Light target, float endValue, float duration)
+        {
+            TweenerCore<float, float, FloatOptions> t = DOTween.To(() => target.range, x => target.range = x, endValue, duration);
+            t.SetTarget(target);
+            return t;
+        }
+        
+        #endregion
+        
+        #region Colliders3D
+        
+        public static TweenerCore<Vector3, Vector3, VectorOptions> DOBoxColliderSize(this BoxCollider target, Vector3 endValue, float duration)
+        {
+            TweenerCore<Vector3, Vector3, VectorOptions> t = DOTween.To(() => target.size, x => target.size = x, endValue, duration);
+            t.SetTarget(target);
+            return t;
+        }
+        
+        public static TweenerCore<Vector3, Vector3, VectorOptions> DOBoxColliderCenter(this BoxCollider target, Vector3 endValue, float duration)
+        {
+            TweenerCore<Vector3, Vector3, VectorOptions> t = DOTween.To(() => target.center, x => target.center = x, endValue, duration);
+            t.SetTarget(target);
+            return t;
+        }
+        
+        public static TweenerCore<float, float, FloatOptions> DOSphereColliderSize(this SphereCollider target, float endValue, float duration)
+        {
+            TweenerCore<float, float, FloatOptions> t = DOTween.To(() => target.radius, x => target.radius = x, endValue, duration);
+            t.SetTarget(target);
+            return t;
+        }
+        
+        public static TweenerCore<Vector3, Vector3, VectorOptions> DOSphereColliderCenter(this SphereCollider target, Vector3 endValue, float duration)
+        {
+            TweenerCore<Vector3, Vector3, VectorOptions> t = DOTween.To(() => target.center, x => target.center = x, endValue, duration);
+            t.SetTarget(target);
+            return t;
+        }
+        
+        public static TweenerCore<float, float, FloatOptions> DOCapsuleColliderSize(this CapsuleCollider target, float endValue, float duration)
+        {
+            TweenerCore<float, float, FloatOptions> t = DOTween.To(() => target.radius, x => target.radius = x, endValue, duration);
+            t.SetTarget(target);
+            return t;
+        }
+        
+        public static TweenerCore<Vector3, Vector3, VectorOptions> DOCapsuleColliderCenter(this CapsuleCollider target, Vector3 endValue, float duration)
+        {
+            TweenerCore<Vector3, Vector3, VectorOptions> t = DOTween.To(() => target.center, x => target.center = x, endValue, duration);
+            t.SetTarget(target);
+            return t;
+        }
+        
         #endregion
     }
 }
